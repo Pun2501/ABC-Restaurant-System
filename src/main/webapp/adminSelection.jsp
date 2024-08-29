@@ -97,7 +97,8 @@
         </div>
         <p>Please choose your management area:</p>
         <a href="staffManagement.jsp">Staff Management</a>
-        <a href="adminDashboard.jsp">Restaurant Management</a>
+        <a href="food">Restaurant Management</a>
+        
     </div>
 
     <footer>

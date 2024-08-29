@@ -1,212 +1,341 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.abc.model.User" %>
-<%@ page session="true" %>
-<%
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-        return; // Ensure the rest of the page is not executed if redirected
-    }
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Dashboard - ABC Restaurant</title>
+    <title>ABCD Restaurant</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            line-height: 1.6;
+            font-family: Arial, sans-serif;
         }
-        .header {
-            background-color: #002F6C; /* Navy Blue */
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000; /* Ensure it overlays other content */
+        header {
+            background-color: #343a40;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .header nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .header nav ul li {
-            display: inline;
-        }
-        .header nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .header nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        .banner {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-            margin-top: 60px; /* Space for fixed header */
-        }
-        .banner img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-        .banner img.active {
-            opacity: 1;
-        }
-        .content {
-            padding: 20px;
-            padding-top: 30px; /* Extra space for banner */
-            background-color: #f4f4f4;
-            min-height: 600px; /* Ensure enough space */
-        }
-        .menu, .reviews {
-            margin: 20px auto;
-            max-width: 800px;
-        }
-        .menu h3, .reviews h3 {
-            color: #002F6C; /* Navy Blue */
-            border-bottom: 2px solid #FFD700; /* Gold */
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .menu ul {
-            list-style: none;
-            padding: 0;
-        }
-        .menu li {
-            margin: 10px 0;
-        }
-        .menu li a {
-            color: #002F6C; /* Navy Blue */
-            text-decoration: none;
+        .navbar-brand {
             font-weight: bold;
         }
-        .menu li a:hover {
-            text-decoration: underline;
+        .carousel-caption {
+            bottom: 20%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+            padding: 20px; /* Padding around the text */
+            border-radius: 10px; /* Rounded corners */
         }
-        .reviews blockquote {
-            border-left: 4px solid #002F6C; /* Navy Blue */
-            padding-left: 15px;
-            margin: 15px 0;
-            font-style: italic;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+        .carousel-caption h5 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px; /* Space between heading and paragraph */
         }
-        .footer {
-            background-color: #002F6C; /* Navy Blue */
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            left: 0;
+        .carousel-caption p {
+            font-size: 1.25rem;
+        }
+        #intro {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        #menu-preview .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #menu-preview .card-img-top {
+            border-bottom: 2px solid #ddd;
+        }
+        #offers, #reviews {
+            background-color: #e9ecef;
+        }
+        #offers h2, #reviews h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #343a40;
+        }
+        footer a {
+            color: #f8f9fa;
+        }
+        footer a:hover {
+            color: #e9ecef;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>ABC Restaurant</h1>
-        <nav>
-            <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li><a href="reservations.jsp">Reservations</a></li>
-                <li><a href="gallery.jsp">Gallery</a></li>
-                <li><a href="menu.jsp">Menu</a></li>
-                <li><a href="ordering.jsp">Order Food</a></li>
-                <li><a href="contact.jsp">Contact Us</a></li>
-                <li><a href="query.jsp">Queries</a></li>
+    <!-- Header Section -->
+ <header class="bg-dark text-white">
+    <nav class="navbar navbar-expand-lg navbar-dark container">
+        <img src="images/logo1.png" alt="Logo" style="width: 40px; height: 40px; margin-right: 10px; object-fit: contain;">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">ABC Restaurant</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="gallery.jsp">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.jsp">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="reservation.jsp">Reservations</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%
+                            User user = (User) session.getAttribute("user");
+                            if (user != null) {
+                                out.print("Hello, " + user.getUsername());
+                            } else {
+                                out.print("Login");
+                            }
+                        %>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <%
+                            if (user != null) {
+                        %>
+                            <a class="dropdown-item disabled" href="#">Email: <%= user.getEmail() %></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout.jsp">Logout</a>
+                        <%
+                            } else {
+                        %>
+                            <a class="dropdown-item" href="login.jsp">Login</a>
+                            <a class="dropdown-item" href="register.jsp">Register</a>
+                        <%
+                            }
+                        %>
+                    </div>
+                </li>
             </ul>
-        </nav>
-    </header>
-    
-    <div class="banner">
-        <img src="<%= request.getContextPath() %>/images/banner1.png" alt="Delicious Food" class="active">
-        <img src="<%= request.getContextPath() %>/images/banner2.jpeg" alt="Elegant Dining">
-        <img src="<%= request.getContextPath() %>/images/banner3.jpeg" alt="Great Service">
+        </div>
+    </nav>
+</header>
+
+
+
+
+    <!-- Main Banner/Slider Section -->
+    <section id="banner">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="images/banner1.jpg" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Welcome to ABC Restaurant</h5>
+                        <p>Experience the taste of excellence.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="images/banner3.webp" alt="Second slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Delicious & Fresh</h5>
+                        <p>Only the best ingredients for our dishes.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="images/banner2.webp" alt="Third slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Make a Reservation</h5>
+                        <p>Book a table easily and quickly online.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="images/banner.webp" alt="Fourth slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Exquisite Desserts</h5>
+                        <p>Enjoy our wide range of exquisite desserts.</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="intro" class="py-5 text-center">
+        <div class="container">
+            <h2>Welcome to ABC Restaurant</h2>
+            <p>At ABCD Restaurant, we are dedicated to bringing you the finest culinary experience with a menu that blends creativity and flavor in every dish. Our chefs use only the freshest ingredients to create meals that delight the senses.</p>
+        </div>
+    </section>
+
+   <!-- Menu Preview Section -->
+<section id="menu-preview" class="py-5">
+    <div class="container">
+        <h2 class="text-center">Featured Dishes</h2>
+        <div class="row">
+            <!-- Featured Dish 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/food1.jpg" class="img-fluid rounded-circle mr-3" alt="Chicken Cheese Pizza" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Chicken Cheese Pizza</h5>
+                        <p class="mb-1">Pan Pizza topped with chicken, tomatoes, cheese, garlic, and basil.</p>
+                        <p class="mb-2"><strong>Price:</strong> 1800.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Dish 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/food8.jpg" class="img-fluid rounded-circle mr-3" alt="Rice and Curry" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Rice and Curry</h5>
+                        <p class="mb-1">Basmati rice with chicken curry.</p>
+                        <p class="mb-2"><strong>Price:</strong> 1500.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Dish 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/salmon.jpg" class="img-fluid rounded-circle mr-3" alt="Grilled Salmon" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Grilled Salmon</h5>
+                        <p class="mb-1">Fresh salmon fillet grilled to perfection.</p>
+                        <p class="mb-2"><strong>Price:</strong> 1850.00</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Dish 4 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/food3.jpg" class="img-fluid rounded-circle mr-3" alt="Chicken Avocado Salad" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Chicken Avocado Salad</h5>
+                        <p class="mb-1">Chicken with Avocado Salad.</p>
+                        <p class="mb-2"><strong>Price:</strong> 2150.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Dish 5 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/food4.jpg" class="img-fluid rounded-circle mr-3" alt="Spicy Meatball Spaghetti" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Spicy Meatball Spaghetti</h5>
+                        <p class="mb-1">Spaghetti with spicy chicken meatballs.</p>
+                        <p class="mb-2"><strong>Price:</strong> 2350.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Dish 6 -->
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="images/food6.jpg" class="img-fluid rounded-circle mr-3" alt="Grilled Chicken Sandwich" style="width: 100px; height: 100px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">Grilled Chicken Sandwich</h5>
+                        <p class="mb-1">Grilled chicken sandwich with French fries.</p>
+                        <p class="mb-2"><strong>Price:</strong> 1650.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+    <a href="<%= request.getContextPath() %>/menu" class="btn btn-primary">See More</a>
+</div>
     </div>
-    
-    <main class="content">
-        <h2>Welcome, <%= user.getUsername() %>!</h2>
-        <p>You are logged in as <%= user.getRole() %>.</p>
-        
-        <p>At ABC Restaurant, we pride ourselves on offering a warm, inviting atmosphere with a menu full of delightful dishes made from the freshest ingredients. Whether you're here for a casual meal or a special occasion, we ensure an unforgettable dining experience.</p>
-        
-        <section class="menu">
-            <h3>Our Menu:</h3>
-            <ul>
-                <li><a href="menu/starters.jsp">Starters</a></li>
-                <li><a href="menu/main_courses.jsp">Main Courses</a></li>
-                <li><a href="menu/desserts.jsp">Desserts</a></li>
-                <li><a href="menu/drinks.jsp">Drinks</a></li>
-            </ul>
-        </section>
-        
-        <section class="reviews">
-            <h3>Customer Reviews:</h3>
-            <blockquote>
-                “The food was amazing and the service was top-notch. I’ll definitely be coming back!” – Jane D.
-            </blockquote>
-            <blockquote>
-                “A fantastic dining experience with a great ambiance. Highly recommended!” – John S.
-            </blockquote>
-            <blockquote>
-                “Best restaurant in town! The desserts are out of this world.” – Emily R.
-            </blockquote>
-        </section>
-    </main>
-    
-    <footer class="footer">
-        <p>&copy; 2024 ABC Restaurant. All rights reserved.</p>
+</section>
+
+    <!-- Special Offers Section -->
+<section id="offers" class="py-5 text-center">
+    <div class="container">
+        <h2>Special Offers</h2>
+        <p>Check out our latest offers and save big on your favorite dishes!</p>
+        <div class="row">
+            <!-- Offer 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="offer-card">
+                    <img src="images/offer1.jpg" class="img-fluid mb-3" alt="Exclusive Discount">
+                    <h4 class="offer-title">Exclusive Discount</h4>
+                    <p>Enjoy 20% off on all main course dishes every Friday!</p>
+                </div>
+            </div>
+
+            <!-- Offer 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="offer-card">
+                    <img src="images/offer2.jpg" class="img-fluid mb-3" alt="Buy 2 Get 1 Free">
+                    <h4 class="offer-title">Buy 2 Get 1 Free</h4>
+                    <p>Buy any two pizzas and get one free of your choice! Available all week long.</p>
+                </div>
+            </div>
+
+            <!-- Offer 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="offer-card">
+                    <img src="images/offer3.jpg" class="img-fluid mb-3" alt="Weekend Brunch Special">
+                    <h4 class="offer-title">Weekend Brunch Special</h4>
+                    <p>Get a free dessert with every brunch order on Saturdays and Sundays!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" class="py-5">
+        <div class="container">
+            <h2 class="text-center">What Our Customers Say</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"A wonderful dining experience with a great atmosphere. Highly recommend."</p>
+                        <footer class="blockquote-footer">Jane Smith</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"The food was amazing, and the service was excellent. Will definitely come back!"</p>
+                        <footer class="blockquote-footer">John Doe</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"Delicious food and great service. The desserts are to die for!"</p>
+                        <footer class="blockquote-footer">Emily Johnson</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="py-4 text-white">
+        <div class="container text-center">
+            <p>&copy; 2024 ABCD Restaurant. All rights reserved.</p>
+            <p><a href="${pageContext.request.contextPath}/privacy.jsp">Privacy Policy</a> | <a href="${pageContext.request.contextPath}/terms.jsp">Terms of Service</a></p>
+        </div>
     </footer>
-    
-    <script>
-        window.onload = function() {
-            let currentIndex = 0;
-            const slides = document.querySelectorAll('.banner img');
-            const totalSlides = slides.length;
 
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-            }
-
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % totalSlides;
-                showSlide(currentIndex);
-            }
-
-            setInterval(nextSlide, 5000); // Change slide every 5 seconds
-
-            // Initialize the first slide
-            showSlide(currentIndex);
-        };
-    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

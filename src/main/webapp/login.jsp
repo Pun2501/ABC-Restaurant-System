@@ -67,18 +67,18 @@
             background-color: #0056b3;
         }
         
-        .register-link {
+        .register-link, .staff-link {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
         }
         
-        .register-link a {
+        .register-link a, .staff-link a {
             color: #007bff;
             text-decoration: none;
         }
         
-        .register-link a:hover {
+        .register-link a:hover, .staff-link a:hover {
             text-decoration: underline;
         }
     </style>
@@ -97,6 +97,7 @@
             </div>
             <button type="submit">Login</button>
             <p class="register-link">Don't have an account? <a href="register.jsp">Register</a></p>
+            <p class="staff-link">Are you a staff member? <a href="staffLogin.jsp">Staff Login</a></p>
         </form>
     </div>
 </body>

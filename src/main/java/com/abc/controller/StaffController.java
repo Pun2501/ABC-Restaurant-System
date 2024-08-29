@@ -4,8 +4,10 @@ import com.abc.model.Staff;
 import com.abc.service.StaffService;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+
 
 public class StaffController extends HttpServlet {
 
@@ -20,8 +22,10 @@ public class StaffController extends HttpServlet {
             String name = request.getParameter("staffName");
             String email = request.getParameter("email");
             String role = request.getParameter("role");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
-            Staff staff = new Staff(name, email, role);
+            Staff staff = new Staff(name, email, role, username, password);
             staffService.addStaff(staff);
             response.sendRedirect("staffManagement.jsp");
 
@@ -37,23 +41,25 @@ public class StaffController extends HttpServlet {
             String name = request.getParameter("staffName");
             String email = request.getParameter("email");
             String role = request.getParameter("role");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
-            Staff staff = new Staff(staffId, name, email, role);
+            Staff staff = new Staff(staffId, name, email, role, username, password);
             staffService.updateStaff(staff);
             response.sendRedirect("staffManagement.jsp");
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        
-        if ("login".equals(action)) {
+        } else if ("login".equals(action)) {
             // Handle staff login
-            HttpSession session = request.getSession();
-            Staff staff = staffService.getStaffById(Integer.parseInt(request.getParameter("staffId")));
-            session.setAttribute("staff", staff);
-            response.sendRedirect("staffPage.jsp"); // Redirect to the staff page
+            String email = request.getParameter("email"); // Changed from username to email
+            String password = request.getParameter("password");
+            Staff staff = staffService.authenticateStaff(email, password); // Adjusted to use email
+
+            if (staff != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("staff", staff);
+                response.sendRedirect("staffDashboard.jsp"); // Redirect to the staff dashboard
+            } else {
+                response.sendRedirect("loginFailed.jsp"); // Redirect to a login failure page
+            }
         }
     }
 }

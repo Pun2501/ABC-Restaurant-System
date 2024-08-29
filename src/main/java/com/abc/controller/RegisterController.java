@@ -36,7 +36,9 @@ public class RegisterController extends HttpServlet {
                 response.sendRedirect("register.jsp?error=Unable to register");
             }
         } catch (SQLException e) {
+            // Log the error or rethrow the exception
             e.printStackTrace();
+            response.sendRedirect("error.jsp?error=Database error occurred during registration");
         }
     }
 }

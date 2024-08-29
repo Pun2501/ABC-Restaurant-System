@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/abc_restaurant";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/abc_restaurant1";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "1234";
 
@@ -17,9 +17,7 @@ public class DBConnection {
         } catch (ClassNotFoundException e) {
             throw new SQLException("MySQL JDBC driver not found.");
         }
-        
+
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
-    
-    
 }

@@ -1,94 +1,116 @@
-<!DOCTYPE html>
+<style>
+    /* Header Styles */
+    /* Gallery Header Styles */
+.gallery-section h2 {
+    font-family: 'Arial', sans-serif; /* Change to your desired font family */
+    font-weight: bold; /* Apply bold font weight */
+    font-style: italic; /* Apply italic style */
+    color: #333; /* Change text color if needed */
+}
+    
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* Dark background for contrast */
+    color: white; /* Text color white */
+    padding: 10px 20px;
+}
+
+.header a {
+    color: white; /* Link color white */
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.header a:hover {
+    text-decoration: underline; /* Underline on hover for links */
+}
+
+/* Gallery Sections */
+.gallery-section {
+    margin-bottom: 40px;
+}
+.gallery-section h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+.gallery img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistent image size */
+    object-fit: cover; /* Maintains aspect ratio and covers the area */
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Lightbox Styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+}
+.lightbox:target {
+    display: flex;
+}
+.lightbox .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+.lightbox .prev, .lightbox .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 10px;
+}
+.lightbox .prev {
+    left: 20px;
+}
+.lightbox .next {
+    right: 20px;
+}
+
+    </style>
+    
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - ABC Restaurant</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Gallery Sections */
-        .gallery-section {
-            margin-bottom: 40px;
-        }
-        .gallery-section h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-        }
-        .gallery img {
-            width: 100%;
-            height: auto;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-
-        /* Lightbox Styles */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 80%;
-        }
-        .lightbox:target {
-            display: flex;
-        }
-        .lightbox .close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            color: #fff;
-            cursor: pointer;
-        }
-        .lightbox .prev, .lightbox .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            padding: 10px;
-        }
-        .lightbox .prev {
-            left: 20px;
-        }
-        .lightbox .next {
-            right: 20px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>ABC Restaurant</h1>
-        <nav>
-            <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li><a href="reservations.jsp">Reservations</a></li>
-                <li><a href="menu.jsp">Menu</a></li>
-                <li><a href="ordering.jsp">Order Food</a></li>
-                <li><a href="contact.jsp">Contact Us</a></li>
-                <li><a href="query.jsp">Queries</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="header">
+        <a>ABC Restaurant</a>
+        <a href="home.jsp">Back to Home Page</a>
+    </div>
 
     <div class="container">
         <div class="gallery-section">

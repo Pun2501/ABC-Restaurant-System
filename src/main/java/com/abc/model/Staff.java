@@ -1,4 +1,3 @@
-// Staff.java
 package com.abc.model;
 
 public class Staff {
@@ -6,20 +5,26 @@ public class Staff {
     private String name;
     private String email;
     private String role;
+    private String username;
+    private String password;
 
     // Constructor with all fields
-    public Staff(int id, String name, String email, String role) {
+    public Staff(int id, String name, String email, String role, String username, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
+        this.username = username;
+        this.password = password;
     }
 
     // Constructor without ID (used when adding new staff)
-    public Staff(String name, String email, String role) {
+    public Staff(String name, String email, String role, String username, String password) {
         this.name = name;
         this.email = email;
         this.role = role;
+        this.username = username;
+        this.password = password;
     }
 
     // Getters and setters
@@ -53,5 +58,21 @@ public class Staff {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -16,18 +16,8 @@
   	<description></description>
   	<servlet-class>com.abc.controller.RegisterController</servlet-class>
   </servlet>
-  <servlet>
-  	<servlet-name>FoodController</servlet-name>
-  	<display-name>FoodController</display-name>
-  	<description></description>
-  	<servlet-class>com.abc.controller.FoodController</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>MenuServlet</servlet-name>
-  	<display-name>MenuServlet</display-name>
-  	<description></description>
-  	<servlet-class>com.abc.controller.MenuServlet</servlet-class>
-  </servlet>
+  
+  
   <servlet>
   	<servlet-name>StaffController</servlet-name>
   	<display-name>StaffController</display-name>
@@ -35,11 +25,64 @@
   	<servlet-class>com.abc.controller.StaffController</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>GetMenuItemsController</servlet-name>
-  	<display-name>GetMenuItemsController</display-name>
+  	<servlet-name>FoodController</servlet-name>
+  	<display-name>FoodController</display-name>
   	<description></description>
-  	<servlet-class>com.abc.controller.GetMenuItemsController</servlet-class>
+  	<servlet-class>com.abc.controller.FoodController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>MenuController</servlet-name>
+  	<display-name>MenuController</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.MenuController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CartServlet</servlet-name>
+  	<display-name>CartServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.CartServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CheckoutServlet</servlet-name>
+  	<display-name>CheckoutServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.CheckoutServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SearchFoodServlet</servlet-name>
+  	<display-name>SearchFoodServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.SearchFoodServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>StaffLoginController</servlet-name>
+  	<display-name>StaffLoginController</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.StaffLoginController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ReservationServlet</servlet-name>
+  	<display-name>ReservationServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.ReservationServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>OrderController</servlet-name>
+  	<display-name>OrderController</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.OrderController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<display-name>LogoutServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.LogoutServlet</servlet-class>
+  </servlet>
+  
+  
+  
+  
+  
   <servlet-mapping>
   	<servlet-name>LoginController</servlet-name>
   	<url-pattern>/LoginController</url-pattern>
@@ -48,20 +91,49 @@
   	<servlet-name>RegisterController</servlet-name>
   	<url-pattern>/RegisterController</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>FoodController</servlet-name>
-  	<url-pattern>/FoodController</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>MenuServlet</servlet-name>
-  	<url-pattern>/MenuServlet</url-pattern>
-  </servlet-mapping>
+ 
   <servlet-mapping>
   	<servlet-name>StaffController</servlet-name>
   	<url-pattern>/StaffController</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>GetMenuItemsController</servlet-name>
-  	<url-pattern>/GetMenuItemsController</url-pattern>
+  	<servlet-name>FoodController</servlet-name>
+  	<url-pattern>/FoodController</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>MenuController</servlet-name>
+  	<url-pattern>/MenuController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CartServlet</servlet-name>
+  	<url-pattern>/CartServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CheckoutServlet</servlet-name>
+  	<url-pattern>/CheckoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SearchFoodServlet</servlet-name>
+  	<url-pattern>/SearchFoodServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>StaffLoginController</servlet-name>
+  	<url-pattern>/StaffLoginController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ReservationServlet</servlet-name>
+  	<url-pattern>/ReservationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OrderController</servlet-name>
+  	<url-pattern>/OrderController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  
+ 
+ 
+  
 </web-app>

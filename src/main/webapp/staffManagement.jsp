@@ -53,6 +53,7 @@
 
         input[type="text"],
         input[type="email"],
+        input[type="password"],
         select {
             width: calc(100% - 22px);
             padding: 10px;
@@ -121,6 +122,11 @@
         .success {
             background-color: #5bc0de; /* Light Blue */
         }
+        
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -145,6 +151,12 @@
                 <option value="Delivery">Delivery</option>
             </select>
 
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
             <button type="submit">Add Staff</button>
         </form>
 
@@ -159,6 +171,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Username</th>
+                    <th>Password</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -170,6 +184,8 @@
                     <td><%= staff.getName() %></td>
                     <td><%= staff.getEmail() %></td>
                     <td><%= staff.getRole() %></td>
+                    <td><%= staff.getUsername() %></td>
+                    <td><%= staff.getPassword() %></td>
                     <td class="actions">
                         <!-- Edit Form -->
                         <form action="StaffController" method="post" style="display:inline;">
@@ -190,6 +206,13 @@
                 %>
             </tbody>
         </table>
+        
+        <!-- Navigation Button -->
+        <div class="navigation">
+            <a href="staffLogin.jsp">
+                <button type="button">Go to Staff Login</button>
+            </a>
+        </div>
     </div>
 
     <script>

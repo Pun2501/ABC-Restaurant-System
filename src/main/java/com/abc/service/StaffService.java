@@ -3,18 +3,14 @@ package com.abc.service;
 import com.abc.model.Staff;
 import com.abc.dao.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StaffService {
 
-    // Method to add a new staff member
     public boolean addStaff(Staff staff) {
-        String query = "INSERT INTO staff (name, email, role) VALUES (?, ?, ?)";
+        String query = "INSERT INTO staff (name, email, role, username, password) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -22,6 +18,8 @@ public class StaffService {
             pstmt.setString(1, staff.getName());
             pstmt.setString(2, staff.getEmail());
             pstmt.setString(3, staff.getRole());
+            pstmt.setString(4, staff.getUsername());
+            pstmt.setString(5, staff.getPassword());
             int result = pstmt.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -30,7 +28,6 @@ public class StaffService {
         }
     }
 
-    // Method to retrieve all staff members
     public List<Staff> getAllStaffMembers() {
         List<Staff> staffList = new ArrayList<>();
         String query = "SELECT * FROM staff";
@@ -40,7 +37,14 @@ public class StaffService {
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                Staff staff = new Staff(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("role"));
+                Staff staff = new Staff(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getString("username"),
+                        rs.getString("password")
+                );
                 staffList.add(staff);
             }
         } catch (SQLException e) {
@@ -50,9 +54,8 @@ public class StaffService {
         return staffList;
     }
 
-    // Method to update an existing staff member
     public boolean updateStaff(Staff staff) {
-        String query = "UPDATE staff SET name = ?, email = ?, role = ? WHERE id = ?";
+        String query = "UPDATE staff SET name = ?, email = ?, role = ?, username = ?, password = ? WHERE id = ?";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -60,7 +63,9 @@ public class StaffService {
             pstmt.setString(1, staff.getName());
             pstmt.setString(2, staff.getEmail());
             pstmt.setString(3, staff.getRole());
-            pstmt.setInt(4, staff.getId());
+            pstmt.setString(4, staff.getUsername());
+            pstmt.setString(5, staff.getPassword());
+            pstmt.setInt(6, staff.getId());
             int result = pstmt.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -69,7 +74,6 @@ public class StaffService {
         }
     }
 
-    // Method to delete a staff member
     public boolean deleteStaff(int staffId) {
         String query = "DELETE FROM staff WHERE id = ?";
 
@@ -85,7 +89,6 @@ public class StaffService {
         }
     }
 
-    // Method to get a staff member by ID (useful for editing)
     public Staff getStaffById(int staffId) {
         Staff staff = null;
         String query = "SELECT * FROM staff WHERE id = ?";
@@ -96,7 +99,14 @@ public class StaffService {
             pstmt.setInt(1, staffId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    staff = new Staff(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("role"));
+                    staff = new Staff(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("role"),
+                            rs.getString("username"),
+                            rs.getString("password")
+                    );
                 }
             }
         } catch (SQLException e) {
@@ -105,4 +115,33 @@ public class StaffService {
 
         return staff;
     }
+
+    public Staff authenticateStaff(String email, String password) {
+        Staff staff = null;
+        String query = "SELECT * FROM staff WHERE email = ? AND password = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    staff = new Staff(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("role"),
+                            rs.getString("username"),
+                            rs.getString("password")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return staff;
+    }
+
 }
