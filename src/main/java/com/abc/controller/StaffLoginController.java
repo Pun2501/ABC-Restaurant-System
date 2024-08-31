@@ -23,7 +23,7 @@ public class StaffLoginController extends HttpServlet {
         if (staff != null) {
             HttpSession session = request.getSession();
             session.setAttribute("staff", staff);
-            response.sendRedirect("staffDashboard");
+            response.sendRedirect("staffDashboard.jsp");
         } else {
             request.setAttribute("errorMessage", "Invalid email or password.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("staffLogin.jsp");

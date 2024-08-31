@@ -8,7 +8,6 @@
     <title>View Reservations</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles.css">
     <style>
-        /* Your CSS styling */
     </style>
 </head>
 <body>

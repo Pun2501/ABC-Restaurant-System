@@ -78,6 +78,18 @@
   	<description></description>
   	<servlet-class>com.abc.controller.LogoutServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ContactUsServlet</servlet-name>
+  	<display-name>ContactUsServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.ContactUsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewQueriesServlet</servlet-name>
+  	<display-name>ViewQueriesServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.abc.controller.ViewQueriesServlet</servlet-class>
+  </servlet>
   
   
   
@@ -131,6 +143,14 @@
   <servlet-mapping>
   	<servlet-name>LogoutServlet</servlet-name>
   	<url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ContactUsServlet</servlet-name>
+  	<url-pattern>/ContactUsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewQueriesServlet</servlet-name>
+  	<url-pattern>/ViewQueriesServlet</url-pattern>
   </servlet-mapping>
   
  
